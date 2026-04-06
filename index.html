@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://latex.vercel.app/style.css">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <title>Curvas de Bezier</title>
+    <style>
+        body { background: #0f5e7b; display: flex; align-items: left; height: 100vh; color: white; font-family: sans-serif; flex-direction: column; }
+        canvas { border: 2px solid #514747; background: #000; }
+        p { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <p style="text-align: center">Curvas de Bezier, uma introdução.</p>
+    <p>(Inserir história/contexto)</p>
+    <p class="no-indent">Queremos trabalhar em um sistema em que os pontos não estejam atrelados a um referêncial em específico.
+        Por exemplo, se tivermos $$a,b,c \in \mathbb{R^2}$$ estamos implicitamente escolhendo a origem (0,0). 
+        O espaço onde a origem não é fixa é denominado espaço afim e, nesse contexto,
+    $$a,b,c \in \mathbb{E^2}$$ </p>
+    <p>Em \( \mathbb{E^2} \) não temos um referêncial, logo não podemos apenas somar pontos, pois não conseguimos determinar (sem um referencial) qual seria o resultado dessa operação.
+        Veja o problema do referêncial na imagem abaixo
+    </p>
+    <p>(Adicionar imagem)</p>
+    <p>Entretanto, dado \(a,b \in \mathbb{E^2}\), podemos determinar o vetor \(v = b-a \in \mathbb{R^2}\).
+        Além disso, dado qualquer vetor \(w \in \mathbb{R^2}\) podemos ter o ponto \(c = a + w \in \mathbb{E^2}\). 
+    </p>
+    <p>Além disso, se a é tal que
+        $$a = \sum_1^n{\alpha_ia_i}$$
+        $$\sum_1^n{\alpha_i}=1$$
+        $$\alpha_1, \ldots,\alpha_n \in \mathbb{R}, a_1,\ldots,a_n \in \mathbb{E^2}$$
+        temos que \(a \in \mathbb{E^2}\) e a é uma combinação baricentrica dos pontos \(a_i\). A demonstração fica como exercício ao leitor. 
+    </p>
+    <p>
+        (É possível ajustar acima usando a função teorema prova etc)
+    </p>
+    <p>
+        (Adicionar que a figura é convexa, os pontos ficam dentro e etc (com a demonstração))
+    </p>
+    <p>
+        Def. Um mapa \(\psi :\mathbb{E^2}\to \mathbb{E^2}\) é dito afim se é invariante em relação as combinações baricentricas, i.e.,
+        $$a = \sum_1^n{\alpha_i \cdot a_i}$$
+        $$\sum_1^n{\alpha_i}=1$$
+        $$\alpha_1, \ldots,\alpha_n \in \mathbb{R}, a_1,\ldots,a_n \in \mathbb{E^2}$$
+        $$\psi (a) = \sum_1^n{\alpha_i \cdot \psi (a_i)}$$
+    </p>
+
+</body>
+</html>
