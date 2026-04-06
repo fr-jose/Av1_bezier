@@ -3,7 +3,7 @@ transformations.addEventListener('load', () => {
     const object1 = transformations.contentDocument.querySelector('#object1');
 
     let pos = 0;
-    velocity = 20;
+    let velocity = 20;
     
     id = setInterval(frame, 5);
     function frame() {
