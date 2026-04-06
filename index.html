@@ -2,7 +2,9 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://latex.vercel.app/style.css">
+    <link rel="stylesheet" href="https://latex.vercel.app/lang/pt.css">
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <html lang="pt-br">
 
     <title>Curvas de Bezier</title>
     <style>
@@ -10,10 +12,21 @@
         canvas { border: 2px solid #514747; background: #000; }
         p { margin-top: 30px; }
     </style>
+    <style>
+    img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    </style>
 </head>
 <body>
-    <p style="text-align: center">Curvas de Bezier, uma introdução.</p>
+    <h2 style="text-align: center">Curvas de Bezier, uma introdução.</h1>
+    <!-- História -->
     <p>(Inserir história/contexto)</p>
+    <!-- Fim da história -->
+
+    <!-- Definição de espaço afim e propriedades básicas -->
     <p class="no-indent">Queremos trabalhar em um sistema em que os pontos não estejam atrelados a um referêncial em específico.
         Por exemplo, se tivermos $$a,b,c \in \mathbb{R^2}$$ estamos implicitamente escolhendo a origem (0,0). 
         O espaço onde a origem não é fixa é denominado espaço afim e, nesse contexto,
@@ -21,29 +34,71 @@
     <p>Em \( \mathbb{E^2} \) não temos um referêncial, logo não podemos apenas somar pontos, pois não conseguimos determinar (sem um referencial) qual seria o resultado dessa operação.
         Veja o problema do referêncial na imagem abaixo
     </p>
-    <p>(Adicionar imagem)</p>
+    <p style="text-align: center"><img src="img1.png" width="80%" height="80%">
+        (Imagem 1. Inderterminação da soma de pontos em \(\mathbb{E^2}\) [1])
+    </p>
     <p>Entretanto, dado \(a,b \in \mathbb{E^2}\), podemos determinar o vetor \(v = b-a \in \mathbb{R^2}\).
         Além disso, dado qualquer vetor \(w \in \mathbb{R^2}\) podemos ter o ponto \(c = a + w \in \mathbb{E^2}\). 
     </p>
-    <p>Além disso, se a é tal que
-        $$a = \sum_1^n{\alpha_ia_i}$$
+    <div class="theorem"> Se a é tal que
+                $$a = \sum_1^n{\alpha_ia_i}$$
         $$\sum_1^n{\alpha_i}=1$$
         $$\alpha_1, \ldots,\alpha_n \in \mathbb{R}, a_1,\ldots,a_n \in \mathbb{E^2}$$
-        temos que \(a \in \mathbb{E^2}\) e a é uma combinação baricentrica dos pontos \(a_i\). A demonstração fica como exercício ao leitor. 
+        Então \(a \in \mathbb{E^2}\).
+    </div>
+    <div class="proof"> Note que
+        $$a = \sum_1^n{\alpha_ia_i} = a_1 + \sum_1^n{\alpha_ia_i} - \sum_1^n{\alpha_ia_1} = a_1 + \sum_2^n{\alpha_i(a_i-a_1)}$$
+    </div>
+    <div class="definition">
+        Uma função \(f: [a,b] \to \mathbb{E^2}\) é dita curva simples se é injetiva em \((a,b)\).
+    </div>
+    <div class="definition">
+        Uma curva simples \(f: [a,b] \to \mathbb{E^2}\) tal que f(a) = f(b) é dita curva de Jordan. 
+    </div>
+    <div class="theorem">
+        Seja \(C\) uma Curva de Jordan. \(\mathbb{E^2 \setminus C}\) divide o plano em duas partes, uma limitada e outra ilimitada.
+        A parte limitada é chamada interior de \(C\), e denotaremos por \(C'\). 
+    </div>
+    <div class="definition">
+        Seja \(C\) uma Curva de Jordan. O fecho de \(C'\) é o conjunto \(\overline{C'} = C' \cup C\).
+    </div>
+    <div class="theorem">
+        Toda combinação convexa dos pontos de um poligono P (Curva de Jordan linear por partes) está no fecho do interior de P.
+    </div>
+    <p style="text-align: center"><img src="img2.png" width="70%" height="70%">
+        (Imagem 2. Combinação convexa de pontos de um poligono [1])
     </p>
-    <p>
-        (É possível ajustar acima usando a função teorema prova etc)
-    </p>
-    <p>
-        (Adicionar que a figura é convexa, os pontos ficam dentro e etc (com a demonstração))
-    </p>
-    <p>
+    <div class="definition">
         Def. Um mapa \(\psi :\mathbb{E^2}\to \mathbb{E^2}\) é dito afim se é invariante em relação as combinações baricentricas, i.e.,
         $$a = \sum_1^n{\alpha_i \cdot a_i}$$
         $$\sum_1^n{\alpha_i}=1$$
         $$\alpha_1, \ldots,\alpha_n \in \mathbb{R}, a_1,\ldots,a_n \in \mathbb{E^2}$$
         $$\psi (a) = \sum_1^n{\alpha_i \cdot \psi (a_i)}$$
+    </div>
+    <p>
+        Se fixarmos uma origem, todo mapa afim é da forma \(\psi (x) = Ax+v\) (Exercício 1).
     </p>
+    <p>
+        A seguir, veremos alguns exemplos de transformações afins, 
+    </p>
+    <!-- Fim da definição de espaço afim e propriedades básicas -->
+    
+    <!-- Seção sobre visualização de transformações lineares básicas -->
+    <p>
+        (Inserir visualizações)
+    </p>
+    <!-- Fim da seção sobre visualização de transformações lineares básicas -->
+    
+    <!-- Teoria demonstrando que de fato a composição da qual a Bezier é feita tem as propriedades desejadas -->
+    <!-- Fim da teoria demonstrando que de fato a composição da qual a Bezier é feita tem as propriedades desejadas -->
+    
+    <!-- Curva de Bezier e Algoritmo de Casteljau -->
+    <!-- Fim da seção sobre a Curva de Bezier e Algoritmo de Casteljau -->
 
+    <!-- Visualização da curva de Bezier dentro da box -->
+    <!-- Fim da visualização da curva de Bezier dentro da box -->      
+    
+    <!-- Visualização da curva de Bezier com os pontos de contrle -->
+    <!-- Fim da Visualização da curva de Bezier com os pontos de contrle -->    
 </body>
 </html>
