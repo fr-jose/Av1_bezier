@@ -11,16 +11,27 @@
         body { background: #0f5e7b; display: flex; align-items: left; height: 100vh; color: white; font-family: sans-serif; flex-direction: column; }
         canvas { border: 2px solid #514747; background: #000; }
         p { margin-top: 30px; }
-    </style>
-    <style>
-    img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    }
+        img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        .svg-expandido {
+            margin-left: -30%;
+            margin-right: 30%;
+            width: 160%;
+            text-align: center;
+        }
+
+        .svg-expandido object {
+            width: 100%;
+            height: 90vh;
+        }
+        
     </style>
 </head>
 <body>
+    <main>
     <h2 style="text-align: center">Curvas de Bezier, uma introdução.</h1>
     <!-- História -->
     <p >Desde fontes para texto [1] até curvas que delineam o formato exato de objetos complexos [2], 
@@ -95,15 +106,13 @@
     <p>
         Se fixarmos uma origem, todo mapa afim é da forma \(\psi (x) = Ax+v\) (Exercício 1).
     </p>
-    <p>
-        A seguir, veremos alguns exemplos de transformações afins, 
-    </p>
     <!-- Fim da definição de espaço afim e propriedades básicas -->
     
-    <!-- Seção sobre visualização de transformações lineares básicas -->
     <p>
-        (Inserir visualizações)
+        A seguir, veremos a animação de algumas transformações afins.
     </p>
+    <!-- Seção sobre visualização de transformações lineares básicas -->
+    <div class="svg-expandido"><object id="transformations" data="transformations.svg" type="image/svg+xml"> </object></div>
     <!-- Fim da seção sobre visualização de transformações lineares básicas -->
     
     <!-- Teoria demonstrando que de fato a composição da qual a Bezier é feita tem as propriedades desejadas -->
@@ -117,5 +126,8 @@
     
     <!-- Visualização da curva de Bezier com os pontos de contrle -->
     <!-- Fim da Visualização da curva de Bezier com os pontos de contrle -->    
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
