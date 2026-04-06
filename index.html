@@ -23,27 +23,28 @@
 <body>
     <h2 style="text-align: center">Curvas de Bezier, uma introdução.</h1>
     <!-- História -->
-    ----------------------------------------------------
-     <p>Desde fontes para texto [1] até curvas que delineam o formato exato de objetos complexos [2], 
+    <p >Desde fontes para texto [1] até curvas que delineam o formato exato de objetos complexos [2], 
         as Curvas de Bézier estão por trás da representação de diversos objetos em computação gráfica.
-     </p>
-     
-     (adicionar gif1)
-
-     <p>Surgindo devido a uma demanda de designers automobilísticos em 1960, essa representação veio 
+    </p>
+    <p style="text-align: center"><img src="gif1.gif" width="80%" height="80%">
+        Gif1. Curva de Bezier dada por 3 pontos [3]
+    </p>
+    <p style="text-align: center"><img src="gif2.gif" width="80%" height="80%">
+        Gif2. Curva de Bezier dada por 5 pontos [3]
+    </p>
+    <p>Surgindo devido a uma demanda de designers automobilísticos em 1960, essa representação veio 
         solucionar o problema das especificações de formas livres, utilizadas por Pierre Bézier para desenhar o exato 
         o modelo de um carro.
-     </p>
+    </p>
 
-     (imagem do desing do carro)
+    (imagem do desing do carro)
 
-     <p>Para definí-las matematicamente, primeiro precisamos definir o que é um espaço afim. 
-     </p>   
-     ----------------------------------------------------
+    <p>Para definí-las matematicamente, primeiro precisamos definir o que é um espaço afim. 
+    </p>   
     <!-- Fim da história -->
 
     <!-- Definição de espaço afim e propriedades básicas -->
-    <p class="no-indent">Queremos trabalhar em um sistema em que os pontos não estejam atrelados a um referêncial em específico.
+    <p>Queremos trabalhar em um sistema em que os pontos não estejam atrelados a um referêncial em específico.
         Por exemplo, se tivermos $$a,b,c \in \mathbb{R^2}$$ estamos implicitamente escolhendo a origem (0,0). 
         O espaço onde a origem não é fixa é denominado espaço afim e, nesse contexto,
     $$a,b,c \in \mathbb{E^2}$$ </p>
@@ -51,7 +52,7 @@
         Veja o problema do referêncial na imagem abaixo
     </p>
     <p style="text-align: center"><img src="img1.png" width="80%" height="80%">
-        (Imagem 1. Inderterminação da soma de pontos em \(\mathbb{E^2}\) [1])
+        Imagem 1. Inderterminação da soma de pontos em \(\mathbb{E^2}\) [1]
     </p>
     <p>Entretanto, dado \(a,b \in \mathbb{E^2}\), podemos determinar o vetor \(v = b-a \in \mathbb{R^2}\).
         Além disso, dado qualquer vetor \(w \in \mathbb{R^2}\) podemos ter o ponto \(c = a + w \in \mathbb{E^2}\). 
@@ -82,7 +83,7 @@
         Toda combinação convexa dos pontos de um poligono P (Curva de Jordan linear por partes) está no fecho do interior de P.
     </div>
     <p style="text-align: center"><img src="img2.png" width="70%" height="70%">
-        (Imagem 2. Combinação convexa de pontos de um poligono [1])
+        Imagem 2. Combinação convexa de pontos de um poligono [1]
     </p>
     <div class="definition">
         Def. Um mapa \(\psi :\mathbb{E^2}\to \mathbb{E^2}\) é dito afim se é invariante em relação as combinações baricentricas, i.e.,
