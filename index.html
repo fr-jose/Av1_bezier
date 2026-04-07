@@ -90,8 +90,11 @@
     <div class="definition">
         Seja \(C\) uma Curva de Jordan. O fecho de \(C'\) é o conjunto \(\overline{C'} = C' \cup C\).
     </div>
+    <div class="definition">
+        Um ponto p é uma combinação convexa dos pontos de um poligono se todos os coeficientes baricentricos são não negativos.
+    </div>
     <div class="theorem">
-        Toda combinação convexa dos pontos de um poligono P (Curva de Jordan linear por partes) está no fecho do interior de P.
+        Um ponto é combinação convexa dos pontos de um poligono P se, e somente se, está no fecho do interior de P. (Exercício 1)
     </div>
     <p style="text-align: center"><img src="img2.png" width="70%" height="70%">
         Imagem 2. Combinação convexa de pontos de um poligono [1]
@@ -104,30 +107,117 @@
         $$\psi (a) = \sum_1^n{\alpha_i \cdot \psi (a_i)}$$
     </div>
     <p>
-        Se fixarmos uma origem, todo mapa afim é da forma \(\psi (x) = Ax+v\) (Exercício 1).
+        Se fixarmos uma origem, todo mapa afim é da forma \(\psi (x) = Ax+v\). (Exercício 2)
     </p>
     <!-- Fim da definição de espaço afim e propriedades básicas -->
     
     <p style="margin-bottom: 20px">
         A seguir, veremos a animação de algumas transformações afins. 
     </p>
+
     <!-- Seção sobre visualização de transformações lineares básicas -->
     <div class="svg-expandido"><object id="transformations" data="transformations.svg" type="image/svg+xml"> </object></div>
     <!-- Fim da seção sobre visualização de transformações lineares básicas -->
     
     <!-- Teoria demonstrando que de fato a composição da qual a Bezier é feita tem as propriedades desejadas -->
+    <p>
+        Se \(\phi \) é uma função afim, decorre que a interpolação linear de dois pontos é invariante em relação a \(\phi \).
+        Mais precisamente, se 
+        $$x(t) = (1-t)a + tb$$
+        Então
+        $$\phi(x(t)) = \phi((1-t)a+tb) = (1-t)\phi(a)+t\phi(b)$$
+    </p>
+    <p>Além disso, dado \(x(t) = (1-t)a + tb\) e fixado \(t \neq 1\), definimos $$k \in \mathbb{R}$$ como o único real tal que
+        $$(x-a)=k(b-x)$$
+        Nesse caso denotaremos
+        $$\dfrac{x-a}{b-x} = k$$
+    </p>
+    <p>
+        Da definição acima, vemos que
+        $$x(t)-a=t(b-a)$$
+        $$\Rightarrow \dfrac{x(t)-a}{b-x} = t \cdot \dfrac{b-a}{b-x} = \dfrac{t}{1-t}$$
+    </p>
+    <p>
+        Note resultado também vale usando \(\psi(x(t)), \psi(a), \psi(b)\). O que nos motiva as seguintes definições:
+    </p>
+    <div class="definition">
+        Dado dois pontos \(a,b \in \mathbb{E^n}\), \(vol_1(a,b)\) é a distância (com sinal) do vetor \(b-a\). 
+    </div>
+    <div class="definition">
+        Dado 3 pontos colineares \(a,b,c \in \mathbb{E^n}\), com \(b \neq c\) definimos que a razão dos 3 pontos é:
+        $$ratio(a,b,c) = \dfrac{vol_1(a,b)}{vol_1(b,c)} = k$$
+        que coincide com a definição acima
+    </div>
+    <div class="theorem">
+        \(\forall a,b \in \mathbb{E^n}\) se, fixado \(a,b\) e \(x(t) := (1-t)a + tb, t \in \mathbb{R}\)
+        temos que uma função \(\phi: \mathbb{E^n} \to \mathbb{E^n}\) é um mapa afim se, e somente se, \(\forall t \in [0,1)\)
+        $$ratio(a,x(t),b) = ratio(\phi(a),\phi(x(t)),\phi(b)) = \dfrac{t}{1-t}$$
+        (Exercício 3)
+    </div>
     <!-- Fim da teoria demonstrando que de fato a composição da qual a Bezier é feita tem as propriedades desejadas -->
     
     <!-- Curva de Bezier e Algoritmo de Casteljau -->
+    <p>Temos, então, as ferramentas necessárias para discorrer sobre a Curva de Bezier e suas propriedades.</p>
+    <p>Considere os pontos de \(\mathbb{E^2}\) como abaixo e \(t \in \mathbb{R}\)</p>
+    <p style="text-align: center"><img src="img3.png" width="80%" height="80%">
+        Imagem 3. Descrição de uma parabola [1]
+    </p>
+    <p>Note que a imagem acima é uma parabola de grau 2, com a equação dada pela imagem abaixo</p>  
+    <p style="text-align: center"><img src="img4.png" width="80%" height="80%">
+        Imagem 4. Equação de uma parabola [1]
+    </p>
+    <p>Fixado um \(t \in [0,1]\) obtemos o desenho abaixo</p>
+    <p style="text-align: center"><img src="img5.png" width="80%" height="80%">
+        Imagem 5. Visualização da parabola [1]
+    </p>    
+    <p>Note que 
+        $$ratio(b_0,b_0^1,b_1) = ratio(b_1,b_1^1,b_2) = ratio(b_0^1,b_0^2,b_1^1) = \dfrac{t}{1-t}$$
+        Ou seja, a construção da parabola é invariante afim.</p>
+    <p>Mais precisamente, vemos que a construção acima é feita por interpolações lineares. Cada uma delas, é invariante em relação a um mapa afim. Logo a composição delas também será.</p>
+    <p>É partindo dessa construção que vamos definir uma forma de construir a Bezier. Seguindo o Algoritmo de Casteljau, descrito abaixo:</p>
+    <p>Sejam os pontos \(b_0,b_1,...,b_n \in \mathbb{E^2}\) dados</p>
+    <p>Tenha
+        $$b_i^r(t) = (1-t)b_i^{r-1}(t)+tb_{i+1}^{i-1}(t)$$
+        $$r = 1,\ldots,n$$
+        $$i = 0,...,n-r$$
+        e \(b_i^0(t) = b_i\)
+    </p>
+    <p>Denotamos \(b^n(t) := b_0^t\) como o curva de Bezier</p>
+    <p>Os pontos do poligono \(P\) dados por \(b_0,\ldots,b_n\) são os pontos de controle da curva \(b^n\)</p>
+    <p>Escrevemos \(b^n(t) = B[b_0,\ldots,b_n;t] = B(P;t) = B[b_0,\ldots,b_n] = BP\)</p>
+    <p>Abaixo, temos uma imagem de uma Curva de Bezier com 4 pontos de controle</p>
+    <p style="text-align: center"><img src="img6.png" width="80%" height="80%">
+        Imagem 6. Exemplo de Curva de Bezier [1]
+    </p>
+    <p>Uma das propriedades da curva de bezier é que é invariante em relação a mapas afins. Suponha que temos 5 pontos de controle, e com ele desenhamos 2000 pontos da Curva de Bezier descrita por esses pontos de controle.
+        Para rotacionar a Curva de Bezier, basta rotacionar os pontos de controle, e calcular novamente a curva de bezier. Nesse caso, calculamos a rotação de apenas 5 pontos, ao invés de 2000 pontos!
+    </p>
+    <p>Outra propriedade importante, é que todos os pontos no algoritmo de Casteljau são calculados como combinação convexa dos pontos do passo anterior do algorítmo.
+        Decorre então, que todos os pontos do algoritmo estão no fecho do interior do poligono P, formado pelos pontos de controle.
+        Ou seja, a Curva de Bezier está dentro do menor retângulo que contem os pontos de controle.
+        Esse resultado é útil para determinar colisões, por exemplo. Como dado vários objetos a Curva de Bezier do movimento da maioria não vai colidir, temos um primeiro teste simples de colisão.
+    </p>
+    <p style="text-align: center"><img src="img7.png" width="80%" height="80%">
+        Imagem 7. Caixa minmax [1]
+    </p>       
+    <p>
+        Dada toda essa teoria, abaixo temos uma visualização da Curva de Bezier, em que é possível escolher os pontos de controle.
+    </p>
     <!-- Fim da seção sobre a Curva de Bezier e Algoritmo de Casteljau -->
 
-    <!-- Visualização da curva de Bezier dentro da box -->
-    <!-- Fim da visualização da curva de Bezier dentro da box -->      
-    
     <!-- Visualização da curva de Bezier com os pontos de contrle -->
+     <div class="svg-expandido"><object id="transformations2" data="transformations.svg" type="image/svg+xml"> </object></div>
     <!-- Fim da Visualização da curva de Bezier com os pontos de contrle -->    
     </main>
 
+    <h2>Referências</h1>
+    <p>[1] Farin, Gerald E. Curves and surfaces for computer aided geometric design: a practical guide</p>
+    <p>[2]</p>
+    <p>[3]</p>
+    <p>Foi utilida IA para criar a função .svg-expandido, bem como para o estudo de geometria afim.</p>
+    <p>O estilo do texto seguiu o design que pode ser obtido em https://latex.vercel.app/</p>
+    <p>O style em head segue, majoritariamente, do material da Semana 01 - JS dos monitores.</p>
+    <p>Alguns sites avulsos sobre como adicionar e centralizar imagem, bem como outros tutoriais simples usado para estudo não vao ser citados. Pois são vários, e não são centrais nas referência.</p>
     <script src="script.js"></script>
 </body>
 </html>
