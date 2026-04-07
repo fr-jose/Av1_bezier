@@ -137,7 +137,7 @@ transformations1.addEventListener('load', () => {
         let graus = (y_barra - 75) * (360 / (480 - 75));
 
         // 3. Aplica a rotação usando o center_x/y que o clique salvou
-        figure.setAttribute("transform", `rotate(${graus}, ${center_x}, ${center_y})`);           
+        figure.setAttribute("transform", `rotate(${graus}, ${x1}, ${y1})`);           
         }
         else if(bar==3){
         y_pos = parseFloat(skew_bar.getAttribute("y") || 0);    
