@@ -184,21 +184,6 @@ transformations1.addEventListener('load', () => {
     }
     }); 
 
-    const canvas1 = svgDoc.querySelector('svg');
-    // Rotacionar em relação a um centro.
-    canvas_figura.addEventListener('click', (e) => {
-    if(rot_bool==1){
-        let pt = canvas1.createSVGPoint();
-        pt.x = e.clientX;
-        pt.y = e.clientY;
-        let coords = pt.matrixTransform(canvas1.getScreenCTM().inverse());
-        
-        center_x = coords.x;
-        center_y = coords.y;
-    }
-    });
-
-
 transformations2.addEventListener('load', () => {
     const svgDoc2 = transformations2.contentDocument;
     const canvas = svgDoc2.querySelector('svg');
