@@ -20,7 +20,7 @@
     <g id="Skew_bar">
         <rect x="765" y="60" width="15" height="450" rx="5" ry="5" fill="rgb(10,100,100)" />
         <rect x="770" y="65" width="5" height="440" rx="5" ry="5" fill="rgb(118,178,10)" />
-        <rect id = "Skew_bar_slider" x="758" y="75" width="30" height="15" rx="5" ry="5" fill="#3d3c3b" />
+        <rect id = "Skew_bar_slider" x="758" y="270" width="30" height="15" rx="5" ry="5" fill="#3d3c3b" />
     </g>    
 
     <g id="Rotation_button">
@@ -40,5 +40,6 @@
         </style>
         <text x="753" y="43" class="texto">Skew</text>
     </g>
-    <circle id = "object1" cx="300" cy="300" r="50" fill="white" stroke="black" stroke-width="3"/>
+    let x1 = 300
+    <polyline id="figure" points="300,180 340,180 340,330 300,330 300,230 260,230" fill="#487aa1" stroke="black" />
 </svg>
