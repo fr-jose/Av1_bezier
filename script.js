@@ -18,10 +18,9 @@ transformations1.addEventListener('load', () => {
     let x_pos = 0;
     let lastX = 0;
     let bar = 0;
-    let rot_bool = 0;
-    let skew_bool = 0;
-    let center_x = 0;
-    let center_y = 0;
+    let angle_rotation = 0;
+    let angle_skew = 0;
+
 
     // Posição de figure
     let x1 = 300;
@@ -130,48 +129,25 @@ transformations1.addEventListener('load', () => {
         y_pos = parseFloat(rotation_bar.getAttribute("y") || 0);    
         rotation_bar.setAttribute("y",y_pos+dy);
         checkboundary_rotation(); 
-        // 1. Pega o valor Y da barra
         let y_barra = parseFloat(rotation_bar.getAttribute("y"));
 
-        // 2. Converte para graus (75 -> 0°, 480 -> 360°)
-        let graus = (y_barra - 75) * (360 / (480 - 75));
+        let angle_rotation = (y_barra - 75) * (360 / (480 - 75));
 
-        // 3. Aplica a rotação usando o center_x/y que o clique salvou
-        figure.setAttribute("transform", `rotate(${graus}, ${x1}, ${y1})`);           
+        figure.setAttribute("transform", `translate(${x1}, ${y2}) skewX(${angle_skew}) translate(${-x1}, ${-y2}) rotate(${angle_rotation}, ${x1}, ${y1})`);
         }
         else if(bar==3){
         y_pos = parseFloat(skew_bar.getAttribute("y") || 0);    
         skew_bar.setAttribute("y",y_pos+dy);
-        checkboundary_skew();            
+        checkboundary_skew();    
+        
+        let y_val = parseFloat(skew_bar.getAttribute("y"));
+        angle_skew = (y_val - 75) * (90 / (480 - 75)) - 45;
+        figure.setAttribute("transform", `translate(${x1}, ${y2}) skewX(${angle_skew}) translate(${-x1}, ${-y2}) rotate(${angle_rotation}, ${x1}, ${y1})`);
         }
     });
 
     svgDoc.addEventListener('mouseup',()=>{
         pressed = false;
-    });
-
-    // Selecionar botão de rotação
-    rotation_button.addEventListener('mousedown',(e)=>{
-        if(rot_bool==0){
-            rot_bool=1;
-            rotation_button.setAttribute('fill', '#0d5aa6');
-        }
-        else{
-            rot_bool=0;
-            rotation_button.setAttribute('fill', '#3b3c3d');
-        }
-    });
-
-    // Selecionar botão de skew
-    skew_button.addEventListener('mousedown',(e)=>{
-        if(skew_bool==0){
-            skew_bool=1;
-            skew_button.setAttribute('fill', '#0d5aa6');
-        }
-        else{
-            skew_bool=0;
-            skew_button.setAttribute('fill', '#3b3c3d');
-        }
     });
 
     // Atualizar figure
@@ -187,45 +163,74 @@ transformations2.addEventListener('load', () => {
     const svgDoc2 = transformations2.contentDocument;
     const canvas = svgDoc2.querySelector('svg');
 
-    // Variáveis de controle
     let pontosControle = [];
+    let pontoSelecionado = null; // Guarda o índice do ponto que está sendo arrastado
+
     const cubicaPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     cubicaPath.setAttribute("fill", "none");
     cubicaPath.setAttribute("stroke", "yellow");
     cubicaPath.setAttribute("stroke-width", "3");
     canvas.appendChild(cubicaPath);
 
-    canvas.addEventListener('click', (e) => {
-        // Trava em 4 pontos
-        if (pontosControle.length >= 4) return;
-
-        // Sua lógica de captura de pontos que funciona
-        const new_circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        let ponto = canvas.createSVGPoint();
-        ponto.x = e.clientX;
-        ponto.y = e.clientY;
-        const coordenadasSVG = ponto.matrixTransform(canvas.getScreenCTM().inverse());
-
-        // Guarda as coordenadas para a curva
-        pontosControle.push({ x: coordenadasSVG.x, y: coordenadasSVG.y });
-
-        // Configura o círculo visual exatamente como no seu código
-        new_circle.setAttribute("cx", coordenadasSVG.x);
-        new_circle.setAttribute("cy", coordenadasSVG.y);
-        new_circle.setAttribute("r", 8);
-        new_circle.setAttribute("fill", "white");
-        new_circle.setAttribute("stroke", "black");
-        canvas.appendChild(new_circle);
-
-        // Quando chegar no quarto ponto, desenha a Bézier
+    // Função para atualizar a string do Path
+    function atualizarBezier() {
         if (pontosControle.length === 4) {
-            const p1 = pontosControle[0];
-            const p2 = pontosControle[1];
-            const p3 = pontosControle[2];
-            const p4 = pontosControle[3];
-
+            const [p1, p2, p3, p4] = pontosControle;
             const d = `M ${p1.x} ${p1.y} C ${p2.x} ${p2.y}, ${p3.x} ${p3.y}, ${p4.x} ${p4.y}`;
             cubicaPath.setAttribute("d", d);
         }
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+        if (e.target.tagName === 'circle') {
+            pontoSelecionado = parseInt(e.target.getAttribute('data-index'));
+            return;
+        }
+
+        if (pontosControle.length < 4) {
+            let ponto = canvas.createSVGPoint();
+            ponto.x = e.clientX;
+            ponto.y = e.clientY;
+            const coords = ponto.matrixTransform(canvas.getScreenCTM().inverse());
+
+            const idx = pontosControle.length;
+            pontosControle.push({ x: coords.x, y: coords.y });
+
+            const new_circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            new_circle.setAttribute("cx", coords.x);
+            new_circle.setAttribute("cy", coords.y);
+            new_circle.setAttribute("r", 10);
+            new_circle.setAttribute("fill", "white");
+            new_circle.setAttribute("stroke", "black");
+            new_circle.setAttribute("data-index", idx); 
+            new_circle.style.cursor = "move";
+            
+            canvas.appendChild(new_circle);
+            atualizarBezier();
+        }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+        if (pontoSelecionado === null) return;
+
+        let ponto = canvas.createSVGPoint();
+        ponto.x = e.clientX;
+        ponto.y = e.clientY;
+        const coords = ponto.matrixTransform(canvas.getScreenCTM().inverse());
+
+        // Atualiza a posição no Array
+        pontosControle[pontoSelecionado].x = coords.x;
+        pontosControle[pontoSelecionado].y = coords.y;
+
+        // Atualiza a posição visual do Círculo
+        const circulo = canvas.querySelector(`circle[data-index="${pontoSelecionado}"]`);
+        circulo.setAttribute("cx", coords.x);
+        circulo.setAttribute("cy", coords.y);
+
+        atualizarBezier();
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        pontoSelecionado = null;
     });
 });
