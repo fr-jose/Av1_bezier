@@ -183,27 +183,49 @@ transformations1.addEventListener('load', () => {
         figure.setAttribute('points', `${x1},${y1} ${x2},${y1} ${x2},${y2} ${x1},${y2} ${x1},${y3} ${x3},${y3}`)
     }
     }); 
-
 transformations2.addEventListener('load', () => {
     const svgDoc2 = transformations2.contentDocument;
     const canvas = svgDoc2.querySelector('svg');
 
-    canvas.addEventListener('click', (e) => {
-        const new_circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    // Variáveis de controle
+    let pontosControle = [];
+    const cubicaPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    cubicaPath.setAttribute("fill", "none");
+    cubicaPath.setAttribute("stroke", "yellow");
+    cubicaPath.setAttribute("stroke-width", "3");
+    canvas.appendChild(cubicaPath);
 
-        ponto = canvas.createSVGPoint();
+    canvas.addEventListener('click', (e) => {
+        // Trava em 4 pontos
+        if (pontosControle.length >= 4) return;
+
+        // Sua lógica de captura de pontos que funciona
+        const new_circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        let ponto = canvas.createSVGPoint();
         ponto.x = e.clientX;
         ponto.y = e.clientY;
         const coordenadasSVG = ponto.matrixTransform(canvas.getScreenCTM().inverse());
 
-        // 2. Define os atributos (posição baseada no clique do mouse)
+        // Guarda as coordenadas para a curva
+        pontosControle.push({ x: coordenadasSVG.x, y: coordenadasSVG.y });
+
+        // Configura o círculo visual exatamente como no seu código
         new_circle.setAttribute("cx", coordenadasSVG.x);
         new_circle.setAttribute("cy", coordenadasSVG.y);
-        new_circle.setAttribute("r", 8); // Raio do círculo
+        new_circle.setAttribute("r", 8);
         new_circle.setAttribute("fill", "white");
         new_circle.setAttribute("stroke", "black");
-
-        // 3. Adiciona o círculo ao SVG
         canvas.appendChild(new_circle);
+
+        // Quando chegar no quarto ponto, desenha a Bézier
+        if (pontosControle.length === 4) {
+            const p1 = pontosControle[0];
+            const p2 = pontosControle[1];
+            const p3 = pontosControle[2];
+            const p4 = pontosControle[3];
+
+            const d = `M ${p1.x} ${p1.y} C ${p2.x} ${p2.y}, ${p3.x} ${p3.y}, ${p4.x} ${p4.y}`;
+            cubicaPath.setAttribute("d", d);
+        }
     });
 });
