@@ -1,0 +1,44 @@
+<svg width="1000" height="600" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" style="background: rgb(0, 0, 0);">
+    <g id="Scale_bar">
+        <rect x="-150" y="560" width="900" height="15" rx="5" ry="5" fill="rgb(10, 85, 100)" />
+        <rect x="-130" y="565" width="860" height="5" rx="5" ry="5" fill="rgb(118,178,10)" />
+        <rect id = "Scale_bar_slider" x="-120" y="555" width="15" height="25" rx="5" ry="5" fill="#3d3c3b" />
+    </g>
+
+    <g id="Translation_bar">
+        <rect x="-150" y="530" width="900" height="15" rx="5" ry="5" fill="rgb(10, 85, 100)" />
+        <rect x="-130" y="535" width="860" height="5" rx="5" ry="5" fill="rgb(118,178,10)" />
+        <rect id = "Translation_bar_slider" x="-120" y="525" width="15" height="25" rx="5" ry="5" fill="#3d3c3b" />
+    </g>
+
+    <g id="Rotation_bar">
+        <rect x="-175" y="60" width="15" height="450" rx="5" ry="5" fill="rgb(10,100,100)" />
+        <rect x="-170" y="65" width="5" height="440" rx="5" ry="5" fill="rgb(118,178,10)" />
+        <rect id = "Rotation_bar_slider" x="-182" y="75" width="30" height="15" rx="5" ry="5" fill="#3d3c3b" />
+    </g>
+
+    <g id="Skew_bar">
+        <rect x="765" y="60" width="15" height="450" rx="5" ry="5" fill="rgb(10,100,100)" />
+        <rect x="770" y="65" width="5" height="440" rx="5" ry="5" fill="rgb(118,178,10)" />
+        <rect id = "Skew_bar_slider" x="758" y="75" width="30" height="15" rx="5" ry="5" fill="#3d3c3b" />
+    </g>    
+
+    <g id="Rotation_button">
+       <rect id = "Rotation_button_press" x="-190" y="25" width="50" height="25" rx="5" ry="5" fill="#3b3c3d" />
+        <style>.texto {
+            font: italic 18px serif;
+            fill: white}
+        </style>
+        <text x="-180" y="43" class="texto">Rot</text>
+    </g>
+
+    <g id="Skew_button">
+       <rect id = "Skew_button_press" x="745" y="25" width="50" height="25" rx="5" ry="5" fill="#3b3c3d" />
+        <style>.texto {
+            font: italic 18px serif;
+            fill: white}
+        </style>
+        <text x="753" y="43" class="texto">Skew</text>
+    </g>
+    <circle id = "object1" cx="300" cy="300" r="50" fill="white" stroke="black" stroke-width="3"/>
+</svg>
