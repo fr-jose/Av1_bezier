@@ -1,7 +1,0 @@
-color1 { #b2d9f7 };
-color2 { #487aa1 };
-color3 { #3d3c3b }; #botão
-color4 { #7c8071 };
-color5 { #dde3ca }; #fundo
-color6 rgb(10,100,100) # barra de trás
-color7 rgb(118,178,10) # barra da frente
